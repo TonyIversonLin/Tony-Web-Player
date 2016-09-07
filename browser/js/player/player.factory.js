@@ -1,4 +1,4 @@
-app.factory('PlayerFactory',function(){
+app.factory('PlayerFactory',function($rootScope){
 
 	const audio = document.createElement('audio');
 	let playerFactory = {};
@@ -32,7 +32,7 @@ app.factory('PlayerFactory',function(){
 		audio.play();
 		playStatus = true;
 	}
-	playerFactory.pause = (song) => {playStatus = false;audio.pause();}
+	playerFactory.pause = () => {playStatus = false;audio.pause();}
 	playerFactory.resume = () => {playStatus = true; audio.play();} 
 	playerFactory.isPlaying = () => playStatus;
 	playerFactory.getCurrentSong = () => currentSong;
@@ -47,10 +47,28 @@ app.factory('PlayerFactory',function(){
 		playerFactory.start(nextSong);
 	}
 	playerFactory.getProgress = () => {
-		console.log('i got here',audio.currentTime );
 		if(!audio.src) return 0;
-		else return audio.currentTime / audio.duration;
+		return progress;
 	}	
 
-	return playerFactory
+	audio.addEventListener('timeupdate',function(){
+		//console.log(audio.currentTime);
+		progress = audio.currentTime / audio.duration * 100;
+		$rootScope.$digest();
+	});
+	audio.addEventListener('ended', function () {
+  		playerFactory.next(); // or some other way to go to the next song
+  		$rootScope.$digest();
+	});
+
+	playerFactory.update = (event) => {
+		let offsetX = 145;
+		let wholeLength = 1420 - offsetX;
+		let clickPosition = event.screenX - offsetX;
+		let ratio = clickPosition / wholeLength;
+		let songLength = audio.duration;
+		//console.log(audio.currentTime);
+		audio.currentTime = songLength*ratio;		
+	}
+	return playerFactory;
 })

@@ -11,7 +11,7 @@
     <script src="/js/albums.controller.js" defer></script>
     <script src="/js/albums.factory.js" defer></script>
     <script src="/js/player.controller.js" defer></script>
-    <script src="/js/player.factory.js" defer></script>
+    <script src="/js/player/player.factory.js" defer></script>
     
   </head>
   <body ng-app="TonyMusic">
@@ -31,7 +31,7 @@
 
       <div class="col-xs-10">
         
-      <div class="album" ng-controller="albumControl" ng-show="false">
+      <div class="album" ng-controller="albumControl" ng-show="true">
           <h3>{{album.name}}</h3>
           <img ng-src="{{album.imageUrl}}" class="img-thumbnail">
         <table class='table'>
@@ -44,9 +44,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="song in album.songs" ng-class="{active: currentSong === song}">
+            <tr ng-repeat="song in album.songs" ng-class="{active: getCurrentSong() === song}">
               <td>
-                <button class="btn btn-default btn-xs" ng-click="select(song)" ng-hide="currentSong === song">
+                <button class="btn btn-default btn-xs" ng-click="select(song)" ng-hide="getCurrentSong() === song">
                   <span class="glyphicon glyphicon-play"></span>
                 </button>
               </td>
@@ -58,7 +58,7 @@
         </table>
       </div>
 
-         <div ng-show="true" ng-controller="albumsControl">
+         <div ng-show="false" ng-controller="albumsControl">
           <h3>Albums</h3>
           <div class="row">
             <div class="col-xs-4" ng-repeat="album in albums">
@@ -79,13 +79,13 @@
 
       <footer>
 
-        <div ng-show="currentSong" ng-controller="playerControl">
+        <div ng-show="getCurrentSong()" ng-controller="playerControl">
           <div class="pull-left">
             <button class="btn btn-default" ng-click="previous()">
               <span class="glyphicon glyphicon-step-backward"></span>
             </button>
             <button class="btn btn-default" ng-click="toggle()">
-              <span class="glyphicon" ng-class="{'glyphicon-pause': playingStatus,'glyphicon-play': !playingStatus}"></span>
+              <span class="glyphicon" ng-class="{'glyphicon-pause': playingStatus(),'glyphicon-play': !playingStatus()}"></span>
             </button>
             <button class="btn btn-default" ng-click="next()">
               <span class="glyphicon glyphicon-step-forward"></span>
@@ -93,7 +93,7 @@
           </div>
           <div class="bar">
               <div class="progress" ng-click="update($event)">
-                <div class="progress-bar" ng-style="{width: progress + '%'}">
+                <div class="progress-bar" ng-style="{width: getProgress() + '%'}">
                 </div>
               </div>
             </div>

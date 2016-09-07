@@ -1,6 +1,6 @@
-app.controller('albumControl',function($scope,$http,$log,$rootScope){
+app.controller('albumControl',function($scope,$http,$log,$rootScope,PlayerFactory){
 
-	$http.get('/api/albums/4')
+	$http.get('/api/albums/1')
 		.then(function(response){
 			var albumFromServer = response.data;
 			//console.log(albumFromServer);
@@ -14,12 +14,7 @@ app.controller('albumControl',function($scope,$http,$log,$rootScope){
 	$scope.select = function(song){
 		$scope.currentSong = song;
 		$scope.playingStatus = true;
-		$rootScope.$broadcast('playSong',song);
+		PlayerFactory.start(song,$scope.album.songs);
 	};
-
-	$rootScope.$on('changeSong',function(event,song){
-		$scope.currentSong = song;
-	})
-
-
+	$scope.getCurrentSong = () => { return PlayerFactory.getCurrentSong(); }
 })
