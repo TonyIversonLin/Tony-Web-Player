@@ -68,7 +68,7 @@ describe('`PlayerFactory` factory', function () {
 
   });
 
-  xdescribe('#resume', function () {
+  describe('#resume', function () {
 
     it("calls audio's `play`", function () {
       chai.spy.on(HTMLAudioElement.prototype, 'play');
@@ -78,7 +78,7 @@ describe('`PlayerFactory` factory', function () {
 
   });
 
-  xdescribe('#isPlaying', function () {
+  describe('#isPlaying', function () {
 
     it('returns false when song is not playing', function () {
       expect(PlayerFactory.isPlaying()).to.equal(false);
@@ -100,7 +100,7 @@ describe('`PlayerFactory` factory', function () {
 
   });
 
-  xdescribe('#getCurrentSong', function () {
+  describe('#getCurrentSong', function () {
 
     it('defaults to null', function () {
       expect(PlayerFactory.getCurrentSong()).to.equal(null);
@@ -119,7 +119,7 @@ describe('`PlayerFactory` factory', function () {
 
   });
 
-  xdescribe('#next', function () {
+  describe('#next', function () {
 
     var songList;
 
@@ -144,7 +144,7 @@ describe('`PlayerFactory` factory', function () {
 
   });
 
-  xdescribe('#previous', function () {
+  describe('#previous', function () {
 
     var songList;
 
@@ -170,7 +170,7 @@ describe('`PlayerFactory` factory', function () {
   });
 
 
-  xdescribe('#getProgress', function () {
+  describe('#getProgress', function () {
 
     it('is 0 before playing song', function () {
       expect(PlayerFactory.getProgress()).to.equal(0);
