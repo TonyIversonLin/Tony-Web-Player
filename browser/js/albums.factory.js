@@ -15,7 +15,7 @@ app.factory('AlbumsFactory',function($http,$log){
 			}).catch($log.error);
 	}
 	albumsFactory.fetchById = function(id){
-		return $http.get('/api/albums/id')
+		return $http.get('/api/albums/'+id)
 			.then(function(response){
 				var albumWithArt = attachAlbumArt(response.data);
 				return albumWithArt;

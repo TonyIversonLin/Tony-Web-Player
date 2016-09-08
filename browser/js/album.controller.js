@@ -1,13 +1,14 @@
-app.controller('albumControl',function($scope,$http,$log,$rootScope,PlayerFactory){
+app.controller('albumControl',function($scope,$http,$log,$rootScope,PlayerFactory,AlbumsFactory){
 
-	$http.get('/api/albums/1')
-		.then(function(response){
-			var albumFromServer = response.data;
-			//console.log(albumFromServer);
-  			albumFromServer.imageUrl = '/api/albums/' + albumFromServer.id + '/image';
-			$scope.album = response.data;
-			$rootScope.$broadcast('albumSongs',$scope.album);
-		}).catch($log.error);
+	$scope.show = false;
+	$rootScope.$on('viewSwap',function(event,data){
+		if(data.view==="oneAlbum"){
+			console.log('i am here',data.id);
+			$scope.show = true;
+			AlbumsFactory.fetchById(data.id)
+				.then(function(album){console.log(album);$scope.album = album})
+		}else $scope.show = false;
+	});
 
 	$scope.currentSong = null;
 
@@ -16,5 +17,9 @@ app.controller('albumControl',function($scope,$http,$log,$rootScope,PlayerFactor
 		$scope.playingStatus = true;
 		PlayerFactory.start(song,$scope.album.songs);
 	};
-	$scope.getCurrentSong = () => { return PlayerFactory.getCurrentSong(); }
+	$scope.getCurrentSong = () => { return PlayerFactory.getCurrentSong(); } 
+
+	$scope.viewOneAlbum = (album) => {
+		$rootScope.$broadcast('viewSwap',{view: 'oneAlbum', id: album.id})
+	} 
 })

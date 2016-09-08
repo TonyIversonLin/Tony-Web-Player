@@ -20,7 +20,6 @@ app.factory('PlayerFactory',function($rootScope){
 			else return (indexOfNextSong = indexCurrentSong - 1);
 		}
 	}	
-
 	playerFactory.start = (song,songlist)=>{
 		if(songlist) songs = songlist;
 		if(currentSong!==song){
@@ -50,7 +49,6 @@ app.factory('PlayerFactory',function($rootScope){
 		if(!audio.src) return 0;
 		return progress;
 	}	
-
 	audio.addEventListener('timeupdate',function(){
 		//console.log(audio.currentTime);
 		progress = audio.currentTime / audio.duration * 100;
@@ -60,7 +58,6 @@ app.factory('PlayerFactory',function($rootScope){
   		playerFactory.next(); // or some other way to go to the next song
   		$rootScope.$digest();
 	});
-
 	playerFactory.update = (event) => {
 		let offsetX = 145;
 		let wholeLength = 1420 - offsetX;
