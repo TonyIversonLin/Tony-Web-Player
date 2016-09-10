@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-xs-4" ng-repeat="album in albums">
     <a class="thumbnail" ui-sref="album({id: album.id})">
-      <img ng-src="{{album.imageUrl}}">
+      <img ng-src="{{album.imageUrl}}" style="max-width:80%">
       <div class="caption">
         <h5>
           <span>{{album.name}}</span>
