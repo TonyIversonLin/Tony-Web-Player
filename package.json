@@ -14,6 +14,7 @@
   "dependencies": {
     "angular": "^1.5.8",
     "angular-mocks": "^1.5.8",
+    "angular-ui-router": "^1.0.0-beta.2",
     "babel": "^5.0.12",
     "body-parser": "^1.12.0",
     "bootstrap": "^3.3.5",
